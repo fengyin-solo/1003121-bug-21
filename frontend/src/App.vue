@@ -11,7 +11,7 @@
     <main class="app-main">
       <header class="app-head">
         <span class="head-desc">面向矿山井下环境监测、瓦斯治理、顶板管理、通风系统与人员定位的一体化矿山安全监测管理后台。</span>
-        <span class="head-user">当前值班：{{ store.operator }} · {{ store.shiftLabel }}</span>
+        <span class="head-user">当前值班：{{ store.operator }}<template v-if="store.operatorRole">（{{ store.operatorRole }}{{ store.operatorTeam ? ' · ' + store.operatorTeam : '' }}）</template> · {{ store.shiftLabel }}</span>
       </header>
       <RouterView />
     </main>

@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routers import ROUTERS
+from app.services.roadway import RoadwayService
 from app.store import store
 
 app = FastAPI(title="矿山安全监测管理平台", version="1.0.0")
@@ -36,3 +37,9 @@ def health() -> dict[str, object]:
 def overview() -> dict[str, object]:
     """运营概览：把各业务模块的待处理量汇总成看板卡片。"""
     return store.overview()
+
+
+@app.on_event("startup")
+def bootstrap_roadway() -> None:
+    """巷道维修存量数据收敛：冻结历史签字、回填派发日期、同步复核清单。"""
+    RoadwayService().bootstrap()
